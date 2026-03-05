@@ -1,42 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>AI Chat</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body{font-family:Arial;background:#0f172a;color:white;text-align:center}
-#chat{max-width:600px;margin:auto}
-input{padding:10px;width:70%}
-button{padding:10px}
-.msg{margin:10px}
-</style>
-</head>
-
-<body>
-
-<h2>My AI Chat</h2>
-
-<div id="chat"></div>
-
-<input id="q" placeholder="Ask anything...">
-<button onclick="ask()">Send</button>
-
 <script>
 
-const API_KEY="PASTE_NEW_KEY_HERE"
+const API_KEY="PASTE_YOUR_NEW_OPENROUTER_KEY"
 
 async function ask(){
 
 let q=document.getElementById("q").value
 
-document.getElementById("chat").innerHTML+=`<div class='msg'><b>You:</b> ${q}</div>`
-document.getElementById("chat").innerHTML+=`<div class='msg'>AI: Thinking...</div>`
+document.getElementById("chat").innerHTML+=`<div><b>You:</b> ${q}</div>`
+document.getElementById("chat").innerHTML+=`<div id="thinking">AI: Thinking...</div>`
 
 let r=await fetch("https://openrouter.ai/api/v1/chat/completions",{
 method:"POST",
 headers:{
 "Authorization":"Bearer "+API_KEY,
-"Content-Type":"application/json"
+"Content-Type":"application/json",
+"HTTP-Referer":"https://thesugrdp.vercel.app",
+"X-Title":"My AI Chat"
 },
 body:JSON.stringify({
 model:"openchat/openchat-7b",
@@ -46,11 +25,8 @@ messages:[{role:"user",content:q}]
 
 let data=await r.json()
 
-document.getElementById("chat").lastChild.innerHTML="<b>AI:</b> "+data.choices[0].message.content
+document.getElementById("thinking").innerHTML="<b>AI:</b> "+data.choices[0].message.content
 
 }
 
 </script>
-
-</body>
-</html>
