@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI Chat</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body{font-family:Arial;background:#0f172a;color:white;text-align:center}
-#chat{width:90%;max-width:500px;margin:auto}
-input{width:70%;padding:10px}
+#chat{max-width:600px;margin:auto}
+input{padding:10px;width:70%}
 button{padding:10px}
-#answer{margin-top:20px}
+.msg{margin:10px}
 </style>
 </head>
 
@@ -17,34 +16,40 @@ button{padding:10px}
 
 <h2>My AI Chat</h2>
 
-<div id="chat">
-<input id="q" placeholder="Ask anything">
+<div id="chat"></div>
+
+<input id="q" placeholder="Ask anything...">
 <button onclick="ask()">Send</button>
-<p id="answer"></p>
-</div>
 
 <script>
+
+const API_KEY="PASTE_NEW_KEY_HERE"
+
 async function ask(){
 
 let q=document.getElementById("q").value
-document.getElementById("answer").innerText="Thinking..."
 
-let res=await fetch("https://openrouter.ai/api/v1/chat/completions",{
+document.getElementById("chat").innerHTML+=`<div class='msg'><b>You:</b> ${q}</div>`
+document.getElementById("chat").innerHTML+=`<div class='msg'>AI: Thinking...</div>`
+
+let r=await fetch("https://openrouter.ai/api/v1/chat/completions",{
 method:"POST",
 headers:{
-"Content-Type":"application/json",
-"Authorization":"Baerer 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"
+"Authorization":"Bearer "+API_KEY,
+"Content-Type":"application/json"
 },
 body:JSON.stringify({
-model:"mistralai/mistral-7b-instruct",
+model:"openchat/openchat-7b",
 messages:[{role:"user",content:q}]
 })
 })
 
-let data=await res.json()
-document.getElementById("answer").innerText=data.choices[0].message.content
+let data=await r.json()
+
+document.getElementById("chat").lastChild.innerHTML="<b>AI:</b> "+data.choices[0].message.content
 
 }
+
 </script>
 
 </body>
