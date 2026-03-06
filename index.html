@@ -1,71 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>My AI Chat</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bangla Auto Caption Generator</title>
 <style>
 body{
-font-family:Arial;
-background:#0f172a;
-color:white;
+font-family: Arial;
 text-align:center;
-padding:20px
+background:#f2f2f2;
+padding:20px;
 }
 
-#chat{
-max-width:500px;
-margin:auto;
-text-align:left
+h1{
+color:#0a66ff;
 }
 
-input{
+textarea{
+width:90%;
+height:100px;
 padding:10px;
-width:70%
+font-size:16px;
 }
 
 button{
-padding:10px
+padding:10px 20px;
+background:#0a66ff;
+color:white;
+border:none;
+font-size:16px;
+border-radius:5px;
+margin-top:10px;
+}
+
+#result{
+margin-top:20px;
+font-size:20px;
+color:#333;
 }
 </style>
 </head>
 
 <body>
 
-<h2>My AI Chat</h2>
+<h1>Bangla Auto Caption Generator</h1>
 
-<div id="chat"></div>
+<textarea id="text" placeholder="Type something..."></textarea><br>
 
-<input id="q" placeholder="Ask something">
-<button onclick="ask()">Send</button>
+<button onclick="generate()">Generate Caption</button>
+
+<div id="result"></div>
 
 <script>
 
-const API_KEY="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"
+let emojis = ["🔥","❤️","😎","✨","💔","🥀","😌","💯"];
 
-async function ask(){
+function generate(){
 
-let q=document.getElementById("q").value
+let text = document.getElementById("text").value;
 
-document.getElementById("chat").innerHTML+=`<p><b>You:</b> ${q}</p>`
-document.getElementById("chat").innerHTML+=`<p id="thinking">AI: Thinking...</p>`
+let emoji = emojis[Math.floor(Math.random()*emojis.length)];
 
-let r=await fetch("https://openrouter.ai/api/v1/chat/completions",{
-method:"POST",
-headers:{
-"Authorization":"Bearer "+API_KEY,
-"Content-Type":"application/json",
-"HTTP-Referer":"https://thesugrdp.vercel.app",
-"X-Title":"My AI Chat"
-},
-body:JSON.stringify({
-model:"openchat/openchat-7b",
-messages:[{role:"user",content:q}]
-})
-})
+let caption = text + " " + emoji + " #bangla #caption";
 
-let data=await r.json()
-
-document.getElementById("thinking").innerHTML="<b>AI:</b> "+data.choices[0].message.content
+document.getElementById("result").innerHTML = caption;
 
 }
 
