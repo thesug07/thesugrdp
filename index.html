@@ -1,67 +1,130 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-<title>Bangla Auto Caption Generator</title>
+<title>Instagram PRO Caption Generator</title>
+
 <style>
+
 body{
-font-family: Arial;
+font-family:Arial;
+background:#0f172a;
+color:white;
 text-align:center;
-background:#f2f2f2;
-padding:20px;
+padding:40px;
 }
 
-h1{
-color:#0a66ff;
+.box{
+background:#1e293b;
+padding:25px;
+border-radius:12px;
+max-width:650px;
+margin:auto;
 }
 
-textarea{
-width:90%;
-height:100px;
-padding:10px;
-font-size:16px;
+input,select{
+width:85%;
+padding:12px;
+margin:8px;
+border:none;
+border-radius:6px;
 }
 
 button{
-padding:10px 20px;
-background:#0a66ff;
+padding:12px 25px;
+margin:8px;
+background:#e11d48;
 color:white;
 border:none;
-font-size:16px;
-border-radius:5px;
-margin-top:10px;
+border-radius:6px;
+cursor:pointer;
 }
 
 #result{
 margin-top:20px;
-font-size:20px;
-color:#333;
+background:#020617;
+padding:20px;
+border-radius:10px;
 }
+
+.copy{
+background:#22c55e;
+}
+
 </style>
 </head>
 
 <body>
 
-<h1>Bangla Auto Caption Generator</h1>
+<h1>🔥 Instagram PRO Caption Generator</h1>
 
-<textarea id="text" placeholder="Type something..."></textarea><br>
+<div class="box">
 
-<button onclick="generate()">Generate Caption</button>
+<input id="topic" placeholder="Enter topic (fitness, travel, motivation...)">
+
+<select id="type">
+<option>Reels Caption</option>
+<option>Motivation Post</option>
+<option>Business Post</option>
+<option>Travel Post</option>
+<option>Influencer Post</option>
+</select>
+
+<select id="length">
+<option>Short Caption</option>
+<option>Medium Caption</option>
+<option>Long Caption</option>
+</select>
+
+<br>
+
+<button onclick="generate()">Generate SEO Caption</button>
 
 <div id="result"></div>
 
-<script>
+</div>
 
-let emojis = ["🔥","❤️","😎","✨","💔","🥀","😌","💯"];
+<script>
 
 function generate(){
 
-let text = document.getElementById("text").value;
+var topic=document.getElementById("topic").value;
 
-let emoji = emojis[Math.floor(Math.random()*emojis.length)];
+var hooks=[
+"🔥 Everyone is talking about "+topic+"...",
+"🚀 Want to level up your "+topic+" game?",
+"⚠️ Stop scrolling if you care about "+topic+"!",
+"😳 This "+topic+" trick works like magic.",
+"💡 The secret behind successful "+topic+"."
+];
 
-let caption = text + " " + emoji + " #bangla #caption";
+var captions=[
+"Most people ignore the power of "+topic+". But once you understand it, everything changes. Start today and stay consistent.",
+"If you're serious about "+topic+", remember that small improvements every day create massive results.",
+"The difference between average and great in "+topic+" is consistency, mindset, and action.",
+"Success in "+topic+" is not luck. It's strategy, effort, and learning every day."
+];
 
-document.getElementById("result").innerHTML = caption;
+var hashtags=
+"#viral #explorepage #instagramgrowth #reelsviral #trendingreels #instagrowth #contentcreator #digitalcreator #trend #exploremore #viralcontent #instareels #growthmindset #socialmedia #contentmarketing #influencermarketing #onlinegrowth #creatorlife #reelsinstagram #trendingsound #reelitfeelit #socialmediatips #viralpost #contentstrategy #influencertips #discoverunder10k #explorepage✨";
+
+var hook=hooks[Math.floor(Math.random()*hooks.length)];
+var caption=captions[Math.floor(Math.random()*captions.length)];
+
+var finalText=hook+"<br><br>"+caption+"<br><br>Save this post for later 📌<br>Follow for more tips 🚀<br><br>"+hashtags;
+
+document.getElementById("result").innerHTML=
+"<p id='caption'>"+finalText+"</p><button class='copy' onclick='copyText()'>Copy Caption</button>";
+
+}
+
+function copyText(){
+
+var text=document.getElementById("caption").innerText;
+
+navigator.clipboard.writeText(text);
+
+alert("Caption copied!");
 
 }
 
