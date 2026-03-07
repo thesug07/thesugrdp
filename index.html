@@ -1,64 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Instagram AI Caption Generator</title>
+<meta charset="UTF-8">
+<title>Instagram SEO Caption Generator</title>
 
 <style>
+
 body{
-font-family:Arial;
-background:#111;
+font-family:Arial, sans-serif;
+background:#0f172a;
 color:white;
 text-align:center;
-padding:40px;
+padding:30px;
 }
 
-.box{
-background:#222;
-padding:20px;
-border-radius:10px;
-max-width:600px;
+.container{
+max-width:750px;
 margin:auto;
+background:#1e293b;
+padding:25px;
+border-radius:10px;
 }
 
-input{
+input,select{
 width:80%;
-padding:10px;
+padding:12px;
 margin:10px;
-border-radius:5px;
+border-radius:6px;
 border:none;
 }
 
 button{
-padding:10px 20px;
+padding:12px 25px;
 background:#ff2d55;
 color:white;
 border:none;
-border-radius:5px;
+border-radius:6px;
 cursor:pointer;
 }
 
 textarea{
 width:90%;
-height:200px;
-margin-top:20px;
+height:220px;
+margin-top:15px;
+border-radius:8px;
+padding:10px;
 }
+
+.copy{
+background:#22c55e;
+margin-top:10px;
+}
+
 </style>
 
 </head>
 
 <body>
 
-<h1>🚀 Instagram Caption Generator</h1>
+<h1>🚀 Instagram SEO Caption Generator</h1>
 
-<div class="box">
+<div class="container">
 
-<input id="topic" placeholder="Enter topic (fitness, travel...)">
+<input id="topic" placeholder="Enter topic (fitness, travel, business...)">
 
-<br>
+<select id="type">
+<option>Reels Caption</option>
+<option>Motivation</option>
+<option>Business</option>
+<option>Travel</option>
+<option>Lifestyle</option>
+</select>
 
 <button onclick="generate()">Generate Caption</button>
 
 <textarea id="result"></textarea>
+
+<br>
+
+<button class="copy" onclick="copyCaption()">Copy Caption</button>
 
 </div>
 
@@ -66,30 +86,52 @@ margin-top:20px;
 
 function generate(){
 
-var topic=document.getElementById("topic").value;
+let topic=document.getElementById("topic").value;
 
-var hooks=[
+let hooks=[
 "🔥 Everyone is talking about "+topic+"...",
-"😳 Most people don't know this about "+topic+".",
-"🚀 Want to grow fast in "+topic+"?",
-"⚠️ Stop ignoring this "+topic+" tip.",
+"🚀 Want to grow faster in "+topic+"?",
+"⚠️ Stop scrolling if you care about "+topic+"!",
+"😳 This "+topic+" trick is going viral.",
 "💡 The secret behind successful "+topic+"."
 ];
 
-var captions=[
-"Consistency is the key to mastering "+topic+". Start small, stay focused, and results will follow.",
-"If you really want success in "+topic+", you need discipline and daily action.",
-"The biggest mistake people make in "+topic+" is quitting too early."
+let captions=[
+"Most people fail at "+topic+" because they quit too early. Stay consistent and results will follow.",
+"If you're serious about "+topic+", focus on learning and improving every day.",
+"Success in "+topic+" doesn't happen overnight. It comes from daily discipline.",
+"The biggest growth in "+topic+" happens when you take action consistently."
 ];
 
-var hashtags=
-"#viral #explorepage #reelsviral #instagramgrowth #contentcreator #trend #trendingreels #explore #instareels #viralpost #instagrowth #creatorlife #growthmindset #socialmedia #reelitfeelit";
+let hashtags=[
+"#viral #explorepage #reelsviral #instagrowth #instagramgrowth #contentcreator #trend #trendingreels #creatorlife #explore",
+"#socialmedia #digitalcreator #reelitfeelit #viralpost #growthmindset #contentmarketing #instareels #trendingnow",
+"#discoverunder10k #influencertips #instadaily #reelsinstagram #contentstrategy #socialmediatips"
+];
 
-var hook=hooks[Math.floor(Math.random()*hooks.length)];
-var caption=captions[Math.floor(Math.random()*captions.length)];
+let hook=hooks[Math.floor(Math.random()*hooks.length)];
+let caption=captions[Math.floor(Math.random()*captions.length)];
+let tag=hashtags[Math.floor(Math.random()*hashtags.length)];
 
-document.getElementById("result").value=
-hook+"\n\n"+caption+"\n\nSave this post 📌\nFollow for more 🚀\n\n"+hashtags;
+let finalText=
+hook+"\n\n"+
+caption+"\n\n"+
+"Save this post 📌\nFollow for more 🚀\n\n"+
+tag;
+
+document.getElementById("result").value=finalText;
+
+}
+
+function copyCaption(){
+
+let text=document.getElementById("result");
+
+text.select();
+
+document.execCommand("copy");
+
+alert("Caption copied!");
 
 }
 
