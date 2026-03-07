@@ -1,75 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Super Ultra Caption AI</title>
+<title>Instagram AI Caption Generator</title>
 
 <style>
 body{
 font-family:Arial;
-background:#0f172a;
+background:#111;
 color:white;
 text-align:center;
 padding:40px;
 }
 
-.container{
-max-width:750px;
+.box{
+background:#222;
+padding:20px;
+border-radius:10px;
+max-width:600px;
 margin:auto;
-background:#1e293b;
-padding:25px;
-border-radius:12px;
 }
 
-input,select{
-width:85%;
-padding:12px;
+input{
+width:80%;
+padding:10px;
 margin:10px;
+border-radius:5px;
 border:none;
-border-radius:6px;
 }
 
 button{
-padding:12px 25px;
-background:#f43f5e;
+padding:10px 20px;
+background:#ff2d55;
 color:white;
 border:none;
-border-radius:6px;
+border-radius:5px;
 cursor:pointer;
 }
 
 textarea{
 width:90%;
-height:220px;
-margin-top:15px;
-border-radius:8px;
-padding:10px;
+height:200px;
+margin-top:20px;
 }
-
 </style>
+
 </head>
 
 <body>
 
-<h1>🚀 Super Ultra Caption AI Generator</h1>
+<h1>🚀 Instagram Caption Generator</h1>
 
-<div class="container">
+<div class="box">
 
-<input id="topic" placeholder="Post topic (fitness, travel, business...)">
+<input id="topic" placeholder="Enter topic (fitness, travel...)">
 
-<select id="platform">
-<option>Instagram</option>
-<option>TikTok</option>
-<option>YouTube Shorts</option>
-</select>
+<br>
 
-<select id="tone">
-<option>Viral</option>
-<option>Professional</option>
-<option>Funny</option>
-<option>Motivational</option>
-</select>
-
-<button onclick="generate()">Generate AI Caption</button>
+<button onclick="generate()">Generate Caption</button>
 
 <textarea id="result"></textarea>
 
@@ -77,33 +64,32 @@ padding:10px;
 
 <script>
 
-async function generate(){
+function generate(){
 
-let topic=document.getElementById("topic").value;
-let tone=document.getElementById("tone").value;
-let platform=document.getElementById("platform").value;
+var topic=document.getElementById("topic").value;
 
-let prompt=
-"Write a viral "+platform+" caption about "+topic+
-" with "+tone+
-" tone. Include hooks, call to action, and 30 SEO hashtags.";
+var hooks=[
+"🔥 Everyone is talking about "+topic+"...",
+"😳 Most people don't know this about "+topic+".",
+"🚀 Want to grow fast in "+topic+"?",
+"⚠️ Stop ignoring this "+topic+" tip.",
+"💡 The secret behind successful "+topic+"."
+];
 
-let response=await fetch("https://api.openai.com/v1/chat/completions",{
-method:"POST",
-headers:{
-"Content-Type":"application/json",
-"Authorization":"Bearer YOUR_API_KEY"
-},
-body:JSON.stringify({
-model:"gpt-4o-mini",
-messages:[{role:"user",content:prompt}],
-max_tokens:300
-})
-});
+var captions=[
+"Consistency is the key to mastering "+topic+". Start small, stay focused, and results will follow.",
+"If you really want success in "+topic+", you need discipline and daily action.",
+"The biggest mistake people make in "+topic+" is quitting too early."
+];
 
-let data=await response.json();
+var hashtags=
+"#viral #explorepage #reelsviral #instagramgrowth #contentcreator #trend #trendingreels #explore #instareels #viralpost #instagrowth #creatorlife #growthmindset #socialmedia #reelitfeelit";
 
-document.getElementById("result").value=data.choices[0].message.content;
+var hook=hooks[Math.floor(Math.random()*hooks.length)];
+var caption=captions[Math.floor(Math.random()*captions.length)];
+
+document.getElementById("result").value=
+hook+"\n\n"+caption+"\n\nSave this post 📌\nFollow for more 🚀\n\n"+hashtags;
 
 }
 
