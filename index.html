@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Creator SEO Tool</title>
+<title>Universal Instagram SEO Generator</title>
 
 <style>
-
 body{
 font-family:Arial;
 background:#0f172a;
@@ -21,7 +20,7 @@ max-width:700px;
 margin:auto;
 }
 
-input{
+input,select{
 width:80%;
 padding:12px;
 margin:10px;
@@ -40,22 +39,33 @@ cursor:pointer;
 
 textarea{
 width:90%;
-height:200px;
+height:260px;
 margin-top:20px;
 border-radius:8px;
+padding:10px;
 }
-
 </style>
 
 </head>
 
 <body>
 
-<h1>🚀 Creator SEO Tool</h1>
+<h1>🚀 Universal Instagram Caption Generator</h1>
 
 <div class="box">
 
-<input id="topic" placeholder="Enter topic">
+<input id="topic" placeholder="Enter topic (push ups, travel vlog, tech review...)">
+
+<select id="niche">
+<option value="fitness">Fitness</option>
+<option value="travel">Travel</option>
+<option value="business">Business</option>
+<option value="food">Food</option>
+<option value="tech">Technology</option>
+<option value="gaming">Gaming</option>
+<option value="motivation">Motivation</option>
+<option value="general">General</option>
+</select>
 
 <br>
 
@@ -67,21 +77,48 @@ border-radius:8px;
 
 <script>
 
-async function generate(){
+function generate(){
 
 let topic=document.getElementById("topic").value;
+let niche=document.getElementById("niche").value;
 
-let response=await fetch("/api/caption",{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({topic:topic})
-});
+let hook="🔥 "+topic+" – Something you need to see";
 
-let data=await response.json();
+let caption="This post is about "+topic+". Small improvements every day create big results. Stay consistent and keep growing.";
 
-document.getElementById("result").value=data.caption;
+let hashtagDatabase={
+
+fitness:"#fitness #workout #fitnessmotivation #fitlife #gym #bodyweighttraining #strengthtraining",
+
+travel:"#travel #travelgram #wanderlust #travelreels #explore #adventure #travellife",
+
+business:"#business #entrepreneur #marketing #successmindset #onlinebusiness #startup",
+
+food:"#food #foodie #foodlover #instafood #delicious #foodblogger",
+
+tech:"#technology #techreview #gadgets #innovation #technews",
+
+gaming:"#gaming #gamerlife #videogames #gamingcommunity #gamers",
+
+motivation:"#motivation #success #mindset #discipline #selfimprovement",
+
+general:"#viral #explorepage #contentcreator #reelsviral #instagrowth"
+
+};
+
+let hashtags=hashtagDatabase[niche];
+
+let finalText=
+hook+
+"\n\n"+
+caption+
+"\n\n"+
+"💬 Comment your thoughts\n"+
+"📌 Save this post\n"+
+"👥 Tag a friend\n\n"+
+hashtags;
+
+document.getElementById("result").value=finalText;
 
 }
 
