@@ -1,28 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Instagram SEO Caption Generator</title>
+<title>Creator SEO Tool</title>
 
 <style>
 
 body{
-font-family:Arial, sans-serif;
+font-family:Arial;
 background:#0f172a;
 color:white;
 text-align:center;
-padding:30px;
+padding:40px;
 }
 
-.container{
-max-width:750px;
-margin:auto;
+.box{
 background:#1e293b;
 padding:25px;
 border-radius:10px;
+max-width:700px;
+margin:auto;
 }
 
-input,select{
+input{
 width:80%;
 padding:12px;
 margin:10px;
@@ -41,15 +40,9 @@ cursor:pointer;
 
 textarea{
 width:90%;
-height:220px;
-margin-top:15px;
+height:200px;
+margin-top:20px;
 border-radius:8px;
-padding:10px;
-}
-
-.copy{
-background:#22c55e;
-margin-top:10px;
 }
 
 </style>
@@ -58,80 +51,37 @@ margin-top:10px;
 
 <body>
 
-<h1>🚀 Instagram SEO Caption Generator</h1>
+<h1>🚀 Creator SEO Tool</h1>
 
-<div class="container">
+<div class="box">
 
-<input id="topic" placeholder="Enter topic (fitness, travel, business...)">
+<input id="topic" placeholder="Enter topic">
 
-<select id="type">
-<option>Reels Caption</option>
-<option>Motivation</option>
-<option>Business</option>
-<option>Travel</option>
-<option>Lifestyle</option>
-</select>
+<br>
 
 <button onclick="generate()">Generate Caption</button>
 
 <textarea id="result"></textarea>
 
-<br>
-
-<button class="copy" onclick="copyCaption()">Copy Caption</button>
-
 </div>
 
 <script>
 
-function generate(){
+async function generate(){
 
 let topic=document.getElementById("topic").value;
 
-let hooks=[
-"🔥 Everyone is talking about "+topic+"...",
-"🚀 Want to grow faster in "+topic+"?",
-"⚠️ Stop scrolling if you care about "+topic+"!",
-"😳 This "+topic+" trick is going viral.",
-"💡 The secret behind successful "+topic+"."
-];
+let response=await fetch("/api/caption",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({topic:topic})
+});
 
-let captions=[
-"Most people fail at "+topic+" because they quit too early. Stay consistent and results will follow.",
-"If you're serious about "+topic+", focus on learning and improving every day.",
-"Success in "+topic+" doesn't happen overnight. It comes from daily discipline.",
-"The biggest growth in "+topic+" happens when you take action consistently."
-];
+let data=await response.json();
 
-let hashtags=[
-"#viral #explorepage #reelsviral #instagrowth #instagramgrowth #contentcreator #trend #trendingreels #creatorlife #explore",
-"#socialmedia #digitalcreator #reelitfeelit #viralpost #growthmindset #contentmarketing #instareels #trendingnow",
-"#discoverunder10k #influencertips #instadaily #reelsinstagram #contentstrategy #socialmediatips"
-];
-
-let hook=hooks[Math.floor(Math.random()*hooks.length)];
-let caption=captions[Math.floor(Math.random()*captions.length)];
-let tag=hashtags[Math.floor(Math.random()*hashtags.length)];
-
-let finalText=
-hook+"\n\n"+
-caption+"\n\n"+
-"Save this post 📌\nFollow for more 🚀\n\n"+
-tag;
-
-document.getElementById("result").value=finalText;
-
-}
-
-function copyCaption(){
-
-let text=document.getElementById("result");
-
-text.select();
-
-document.execCommand("copy");
-
-alert("Caption copied!");
+document.getElementById("result").value=data.caption;
 
 }
 
