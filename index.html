@@ -1,11 +1,9 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-<title>Instagram PRO Caption Generator</title>
+<title>Super Ultra Caption AI</title>
 
 <style>
-
 body{
 font-family:Arial;
 background:#0f172a;
@@ -14,41 +12,37 @@ text-align:center;
 padding:40px;
 }
 
-.box{
+.container{
+max-width:750px;
+margin:auto;
 background:#1e293b;
 padding:25px;
 border-radius:12px;
-max-width:650px;
-margin:auto;
 }
 
 input,select{
 width:85%;
 padding:12px;
-margin:8px;
+margin:10px;
 border:none;
 border-radius:6px;
 }
 
 button{
 padding:12px 25px;
-margin:8px;
-background:#e11d48;
+background:#f43f5e;
 color:white;
 border:none;
 border-radius:6px;
 cursor:pointer;
 }
 
-#result{
-margin-top:20px;
-background:#020617;
-padding:20px;
-border-radius:10px;
-}
-
-.copy{
-background:#22c55e;
+textarea{
+width:90%;
+height:220px;
+margin-top:15px;
+border-radius:8px;
+padding:10px;
 }
 
 </style>
@@ -56,75 +50,60 @@ background:#22c55e;
 
 <body>
 
-<h1>🔥 Instagram PRO Caption Generator</h1>
+<h1>🚀 Super Ultra Caption AI Generator</h1>
 
-<div class="box">
+<div class="container">
 
-<input id="topic" placeholder="Enter topic (fitness, travel, motivation...)">
+<input id="topic" placeholder="Post topic (fitness, travel, business...)">
 
-<select id="type">
-<option>Reels Caption</option>
-<option>Motivation Post</option>
-<option>Business Post</option>
-<option>Travel Post</option>
-<option>Influencer Post</option>
+<select id="platform">
+<option>Instagram</option>
+<option>TikTok</option>
+<option>YouTube Shorts</option>
 </select>
 
-<select id="length">
-<option>Short Caption</option>
-<option>Medium Caption</option>
-<option>Long Caption</option>
+<select id="tone">
+<option>Viral</option>
+<option>Professional</option>
+<option>Funny</option>
+<option>Motivational</option>
 </select>
 
-<br>
+<button onclick="generate()">Generate AI Caption</button>
 
-<button onclick="generate()">Generate SEO Caption</button>
-
-<div id="result"></div>
+<textarea id="result"></textarea>
 
 </div>
 
 <script>
 
-function generate(){
+async function generate(){
 
-var topic=document.getElementById("topic").value;
+let topic=document.getElementById("topic").value;
+let tone=document.getElementById("tone").value;
+let platform=document.getElementById("platform").value;
 
-var hooks=[
-"🔥 Everyone is talking about "+topic+"...",
-"🚀 Want to level up your "+topic+" game?",
-"⚠️ Stop scrolling if you care about "+topic+"!",
-"😳 This "+topic+" trick works like magic.",
-"💡 The secret behind successful "+topic+"."
-];
+let prompt=
+"Write a viral "+platform+" caption about "+topic+
+" with "+tone+
+" tone. Include hooks, call to action, and 30 SEO hashtags.";
 
-var captions=[
-"Most people ignore the power of "+topic+". But once you understand it, everything changes. Start today and stay consistent.",
-"If you're serious about "+topic+", remember that small improvements every day create massive results.",
-"The difference between average and great in "+topic+" is consistency, mindset, and action.",
-"Success in "+topic+" is not luck. It's strategy, effort, and learning every day."
-];
+let response=await fetch("https://api.openai.com/v1/chat/completions",{
+method:"POST",
+headers:{
+"Content-Type":"application/json",
+"Authorization":"Bearer YOUR_API_KEY"
+},
+body:JSON.stringify({
+model:"gpt-4o-mini",
+messages:[{role:"user",content:prompt}],
+max_tokens:300
+})
+});
 
-var hashtags=
-"#viral #explorepage #instagramgrowth #reelsviral #trendingreels #instagrowth #contentcreator #digitalcreator #trend #exploremore #viralcontent #instareels #growthmindset #socialmedia #contentmarketing #influencermarketing #onlinegrowth #creatorlife #reelsinstagram #trendingsound #reelitfeelit #socialmediatips #viralpost #contentstrategy #influencertips #discoverunder10k #explorepage✨";
+let data=await response.json();
 
-var hook=hooks[Math.floor(Math.random()*hooks.length)];
-var caption=captions[Math.floor(Math.random()*captions.length)];
-
-var finalText=hook+"<br><br>"+caption+"<br><br>Save this post for later 📌<br>Follow for more tips 🚀<br><br>"+hashtags;
-
-document.getElementById("result").innerHTML=
-"<p id='caption'>"+finalText+"</p><button class='copy' onclick='copyText()'>Copy Caption</button>";
-
-}
-
-function copyText(){
-
-var text=document.getElementById("caption").innerText;
-
-navigator.clipboard.writeText(text);
-
-alert("Caption copied!");
+document.getElementById("result").value=data.choices[0].message.content;
 
 }
 
